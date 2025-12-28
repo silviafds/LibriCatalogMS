@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: Libri Catalog MS
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/libri-catalog
+    username: user
+    password: 123
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    database-platform=org:
+      hibernate:
+        dialect:
+          PostgreSQLDialect:
+    hibernate:
+      ddl-auto: update  # Para desenvolvimento
+    show-sql: true
