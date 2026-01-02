@@ -1,4 +1,4 @@
-package com.libri.catalog.domain.vo;
+package com.libri.catalog.adapters.in.web.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class BookVo {
+public class BookResponse {
     private Long id;
     private String title;
     private String description;

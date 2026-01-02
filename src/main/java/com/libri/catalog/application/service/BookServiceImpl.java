@@ -1,6 +1,7 @@
 package com.libri.catalog.application.service;
 
 import com.libri.catalog.adapters.in.web.dto.response.BookRegistrationResponse;
+import com.libri.catalog.adapters.in.web.dto.response.BookResponse;
 import com.libri.catalog.application.mapper.BookMapper;
 import com.libri.catalog.application.ports.in.service.BookService;
 import com.libri.catalog.application.ports.out.repository.BookRepository;
@@ -13,6 +14,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Slf4j
 @Service
@@ -79,6 +82,42 @@ public class BookServiceImpl implements BookService {
         response.setMessage("Livro removido do banco de dados.");
         return response;
     }
+
+    @Override
+    public List<BookResponse> listAllBooks() {
+        List<Book> book = bookRepository.findAll();
+
+        return bookMapper.bookListToBookResponseList(book);
+    }
+
+    @Override
+    public BookResponse listBookForId(Long idBook) {
+        if (!bookRepository.existsById(idBook)) {
+            throw new BookNotFoundException(idBook);
+        }
+
+        Book book = bookRepository.findById(idBook).get();
+
+        return bookMapper.bookToBookResponse(book);
+
+    }
+
+    @Override
+    public BookResponse partialUpdate(BookVo vo) {
+        BookRegistrationResponse response = new BookRegistrationResponse();
+
+        if (!bookRepository.existsById(vo.getId())) {
+            throw new BookNotFoundException(vo.getId());
+        }
+
+        bookRepository.updateBook(vo.getId(), vo.getTitle(), vo.getAuthor(), vo.getDescription(), vo.getSynopsis(),
+                vo.getPageCount(), vo.getPublisher(), vo.getType());
+
+        Book updatedBook = bookRepository.findById(vo.getId()).get();
+
+        return bookMapper.bookToBookResponse(updatedBook);
+    }
+
 
     private boolean isValid(BookVo bookVo) {
         return bookVo.getTitle() != null && !bookVo.getTitle().trim().isEmpty() &&

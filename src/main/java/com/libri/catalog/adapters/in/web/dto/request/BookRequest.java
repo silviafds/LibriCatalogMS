@@ -1,6 +1,7 @@
 package com.libri.catalog.adapters.in.web.dto.request;
 
 public record BookRequest(
+        Long id,
         String title,
         String description,
         String author,

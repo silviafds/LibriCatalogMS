@@ -2,11 +2,14 @@ package com.libri.catalog.adapters.in.web.controller;
 
 import com.libri.catalog.adapters.in.web.dto.request.BookRequest;
 import com.libri.catalog.adapters.in.web.dto.response.BookRegistrationResponse;
+import com.libri.catalog.adapters.in.web.dto.response.BookResponse;
 import com.libri.catalog.application.mapper.BookMapper;
 import com.libri.catalog.application.ports.in.service.BookService;
 import com.libri.catalog.domain.vo.BookVo;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/books")
@@ -33,7 +36,25 @@ public class BookController {
     @DeleteMapping("/delete-book/{id}")
     public BookRegistrationResponse deleteBook(
             @PathVariable Long id) {
-
         return bookService.deleteBook(id);
+    }
+
+    @GetMapping("/list-books")
+    public List<BookResponse> listAllBooks() {
+        return bookService.listAllBooks();
+    }
+
+    @GetMapping("/list-book/{id}")
+    public BookResponse listBookForId(@PathVariable Long id) {
+        return bookService.listBookForId(id);
+    }
+
+    @PatchMapping("/edit-book/{id}")
+    public BookResponse partialUpdateBook(
+            @RequestBody BookRequest request) {
+
+        BookVo bookVo = bookMapper.toBookVoWithId(request);
+
+        return bookService.partialUpdate(bookVo);
     }
 }
