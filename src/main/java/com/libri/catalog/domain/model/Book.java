@@ -1,19 +1,17 @@
 package com.libri.catalog.domain.model;
 
-import com.libri.catalog.domain.enums.BookType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "books")
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@Entity
+@Table(name = "books")
 public class Book {
 
     @Id
@@ -23,13 +21,13 @@ public class Book {
     @Column(name = "title", nullable = false, length = 200)
     private String title;
 
-    @Column(name = "description", columnDefinition = "TEXT")
+    @Column(name = "description", nullable = false, length = 200)
     private String description;
 
     @Column(name = "author", nullable = false, length = 100)
     private String author;
 
-    @Column(name = "synopsis", columnDefinition = "TEXT")
+    @Column(name = "synopsis", nullable = false, length = 200)
     private String synopsis;
 
     @Column(name = "page_count")
@@ -38,26 +36,8 @@ public class Book {
     @Column(name = "publisher", length = 100)
     private String publisher;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "type", length = 20)
-    private BookType type;
+    @Column(name = "type", length = 100)
+    private String type;
 
-    @Column(name = "created_at")
-    @Builder.Default
-    private LocalDateTime createdAt = LocalDateTime.now();
 
-    @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
-
-    // Método auxiliar para pré-salvar
-    @PrePersist
-    protected void onCreate() {
-        createdAt = LocalDateTime.now();
-    }
-
-    // Método auxiliar para pré-atualizar
-    @PreUpdate
-    protected void onUpdate() {
-        updatedAt = LocalDateTime.now();
-    }
 }
