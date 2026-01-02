@@ -6,10 +6,7 @@ import com.libri.catalog.application.mapper.BookMapper;
 import com.libri.catalog.application.ports.in.service.BookService;
 import com.libri.catalog.domain.vo.BookVo;
 import jakarta.validation.Valid;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/books")
@@ -31,5 +28,12 @@ public class BookController {
         BookVo bookVo = bookMapper.toBookVo(request);
 
         return bookService.registerBook(bookVo);
+    }
+
+    @DeleteMapping("/delete-book/{id}")
+    public BookRegistrationResponse deleteBook(
+            @PathVariable Long id) {
+
+        return bookService.deleteBook(id);
     }
 }

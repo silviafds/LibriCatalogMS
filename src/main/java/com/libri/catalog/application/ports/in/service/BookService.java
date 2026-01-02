@@ -9,4 +9,5 @@ import org.springframework.stereotype.Component;
 public interface BookService {
 
     BookRegistrationResponse registerBook(BookVo vo);
+    BookRegistrationResponse deleteBook(Long id);
 }

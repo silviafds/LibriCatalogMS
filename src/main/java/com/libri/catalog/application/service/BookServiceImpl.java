@@ -5,6 +5,7 @@ import com.libri.catalog.application.mapper.BookMapper;
 import com.libri.catalog.application.ports.in.service.BookService;
 import com.libri.catalog.application.ports.out.repository.BookRepository;
 import com.libri.catalog.domain.enums.RegistrationStatus;
+import com.libri.catalog.domain.exceptions.BookNotFoundException;
 import com.libri.catalog.domain.model.Book;
 import com.libri.catalog.domain.vo.BookVo;
 import jakarta.transaction.Transactional;
@@ -62,6 +63,21 @@ public class BookServiceImpl implements BookService {
 
         return response;
 
+    }
+
+    @Override
+    public BookRegistrationResponse deleteBook(Long idBook) {
+        if (!bookRepository.existsById(idBook)) {
+            throw new BookNotFoundException(idBook);
+        }
+
+        Book book = bookRepository.findById(idBook).get();
+        bookRepository.delete(book);
+
+        BookRegistrationResponse response = new BookRegistrationResponse();
+        response.setStatus(200);
+        response.setMessage("Livro removido do banco de dados.");
+        return response;
     }
 
     private boolean isValid(BookVo bookVo) {
