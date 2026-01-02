@@ -16,4 +16,5 @@ public interface BookService {
     List<BookResponse> listAllBooks();
     BookResponse listBookForId(Long id);
     BookResponse partialUpdate(BookVo vo);
+    BookResponse searchBookByTitle(String title);
 }

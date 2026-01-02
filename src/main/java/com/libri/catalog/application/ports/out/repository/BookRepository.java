@@ -32,4 +32,7 @@ public interface BookRepository extends JpaRepository<Book, Long> {
             @Param("publisher") String publisher,
             @Param("type") String type);
 
+    @Query(value = "SELECT * FROM books WHERE title = :title", nativeQuery = true)
+    Book searchBookByTitle(@Param("title") String title);
+
 }

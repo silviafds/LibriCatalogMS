@@ -49,12 +49,19 @@ public class BookController {
         return bookService.listBookForId(id);
     }
 
-    @PatchMapping("/edit-book/{id}")
+    @PatchMapping("/edit-book")
     public BookResponse partialUpdateBook(
             @RequestBody BookRequest request) {
 
         BookVo bookVo = bookMapper.toBookVoWithId(request);
 
         return bookService.partialUpdate(bookVo);
+    }
+
+    @GetMapping("/search-book/{title}")
+    public BookResponse searchBookByTitle(
+            @PathVariable String title) {
+
+        return bookService.searchBookByTitle(title);
     }
 }

@@ -118,6 +118,17 @@ public class BookServiceImpl implements BookService {
         return bookMapper.bookToBookResponse(updatedBook);
     }
 
+    @Override
+    public BookResponse searchBookByTitle(String title) {
+        Book book = bookRepository.searchBookByTitle(title);
+
+        if (book == null) {
+            throw new BookNotFoundException("Livro com título '" + title + "' não existe no catálogo");
+        }
+
+        return bookMapper.bookToBookResponse(book);
+    }
+
 
     private boolean isValid(BookVo bookVo) {
         return bookVo.getTitle() != null && !bookVo.getTitle().trim().isEmpty() &&
