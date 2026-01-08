@@ -1,8 +1,9 @@
+server:
+  port: 8080
+
 spring:
-  server:
-    port: 8080
   application:
-    name: Libri Catalog MS
+    name: catalog-service
 
   datasource:
     url: jdbc:postgresql://localhost:5432/libri-catalog
@@ -23,3 +24,18 @@ eureka:
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka/
+
+  instance:
+    # ⬇️ ESTA É A CONFIGURAÇÃO CRUCIAL ⬇️
+    hostname: localhost                    # Força localhost
+    prefer-ip-address: false               # ⬅️ FALSE para usar hostname
+    ip-address: 127.0.0.1                  # Define IP explícito
+    non-secure-port-enabled: true
+    secure-port-enabled: false
+    instance-id: ${spring.application.name}:${server.port}
+
+    # Metadata adicional
+    metadata-map:
+      instanceId: ${spring.application.name}:${server.port}
+      hostname: localhost
+      ip: 127.0.0.1
