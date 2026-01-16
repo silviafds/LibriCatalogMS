@@ -5,6 +5,12 @@ spring:
   application:
     name: catalog-service
 
+  rabbitmq:
+    host: localhost      # MESMA configuração do Bookshelf
+    port: 5672
+    username: bookshelf  # MESMO usuário
+    password: senha123   # MESMA senha
+
   datasource:
     url: jdbc:postgresql://localhost:5432/libri-catalog
     username: user
