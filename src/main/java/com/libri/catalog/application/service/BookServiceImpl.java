@@ -17,6 +17,17 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Service implementation responsible for managing book-related business logic.
+ *
+ * This class handles:
+ * - Book registration with validation
+ * - Book deletion
+ * - Book listing and searching
+ * - Partial updates of book data
+ *
+ * It acts as an intermediary between the controller layer and the persistence layer.
+ */
 @Slf4j
 @Service
 @Transactional
@@ -31,6 +42,12 @@ public class BookServiceImpl implements BookService {
         this.bookMapper = bookMapper;
     }
 
+    /**
+     * Registers a new book in the catalog.
+     *
+     * @param bookVo Book data received from the client
+     * @return BookRegistrationResponse containing status and message
+     */
     @Override
     public BookRegistrationResponse registerBook(BookVo bookVo) {
         BookRegistrationResponse response = new BookRegistrationResponse();
@@ -68,6 +85,13 @@ public class BookServiceImpl implements BookService {
 
     }
 
+    /**
+     * Deletes a book by its ID.
+     *
+     * @param idBook Book identifier
+     * @return Confirmation response
+     * @throws BookNotFoundException if the book does not exist
+     */
     @Override
     public BookRegistrationResponse deleteBook(Long idBook) {
         if (!bookRepository.existsById(idBook)) {
@@ -83,6 +107,11 @@ public class BookServiceImpl implements BookService {
         return response;
     }
 
+    /**
+     * Retrieves all books from the catalog.
+     *
+     * @return List of books as response DTOs
+     */
     @Override
     public List<BookResponse> listAllBooks() {
         List<Book> book = bookRepository.findAll();
@@ -90,6 +119,13 @@ public class BookServiceImpl implements BookService {
         return bookMapper.bookListToBookResponseList(book);
     }
 
+    /**
+     * Retrieves a book by its ID.
+     *
+     * @param idBook Book identifier
+     * @return Book response DTO
+     * @throws BookNotFoundException if the book does not exist
+     */
     @Override
     public BookResponse listBookForId(Long idBook) {
         if (!bookRepository.existsById(idBook)) {
@@ -102,6 +138,13 @@ public class BookServiceImpl implements BookService {
 
     }
 
+    /**
+     * Partially updates an existing book.
+     *
+     * @param vo Book data to be updated
+     * @return Updated book response
+     * @throws BookNotFoundException if the book does not exist
+     */
     @Override
     public BookResponse partialUpdate(BookVo vo) {
         BookRegistrationResponse response = new BookRegistrationResponse();
@@ -118,6 +161,13 @@ public class BookServiceImpl implements BookService {
         return bookMapper.bookToBookResponse(updatedBook);
     }
 
+    /**
+     * Searches for a book by its title.
+     *
+     * @param title Book title
+     * @return Book response DTO
+     * @throws BookNotFoundException if no book is found
+     */
     @Override
     public BookResponse searchBookByTitle(String title) {
         Book book = bookRepository.searchBookByTitle(title);
@@ -129,13 +179,20 @@ public class BookServiceImpl implements BookService {
         return bookMapper.bookToBookResponse(book);
     }
 
-
+    /**
+     * Validates required book fields.
+     */
     private boolean isValid(BookVo bookVo) {
         return bookVo.getTitle() != null && !bookVo.getTitle().trim().isEmpty() &&
                 bookVo.getAuthor() != null && !bookVo.getAuthor().trim().isEmpty() &&
                 bookVo.getType() != null;
     }
 
+    /**
+     * Validates business rules for book data.
+     *
+     * @return Validation error message or null if valid
+     */
     private String validateBookData(BookVo bookVo) {
         if (bookVo.getTitle().length() > 200) {
             return "Título não pode exceder 200 caracteres";

@@ -1,0 +1,215 @@
+{
+  "info": {
+    "_postman_id": "180bfa88-1214-46d7-bdfc-1e8eb2a71834",
+    "name": "Libri Catalog",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "23899393"
+  },
+  "item": [
+    {
+      "name": "Register new book",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "{{tokenLibri}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"title\": \"Domain-Driven Design\",\r\n    \"description\": \"Tackling complexity\",\r\n    \"author\": \"Eric Evans\",\r\n    \"synopsis\": \"This is not a boo.\",\r\n    \"pageCount\": 560,\r\n    \"publisher\": \"Addison-Wesley\",\r\n    \"type\": \"TECHNICAL\"\r\n  }",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://{{host}}:{{port}}/books/register-book",
+          "protocol": "http",
+          "host": [
+            "{{host}}"
+          ],
+          "port": "{{port}}",
+          "path": [
+            "books",
+            "register-book"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Edit book",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "{{tokenLibri}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"id\": 6,\r\n    \"title\": \"Driven Domain Design\",\r\n    \"description\": \"Tackling complexity\",\r\n    \"author\": \"Eric Evans\",\r\n    \"synopsis\": \"This is not a boo.\",\r\n    \"pageCount\": 999,\r\n    \"publisher\": \"Addison-Wesley\",\r\n    \"type\": \"TECHNICAL\"\r\n  }",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://{{host}}:{{port}}/books/edit-book/6",
+          "protocol": "http",
+          "host": [
+            "{{host}}"
+          ],
+          "port": "{{port}}",
+          "path": [
+            "books",
+            "edit-book",
+            "6"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Delete book",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "{{tokenLibri}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "http://{{host}}:{{port}}/books/delete-book/4",
+          "protocol": "http",
+          "host": [
+            "{{host}}"
+          ],
+          "port": "{{port}}",
+          "path": [
+            "books",
+            "delete-book",
+            "4"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "List all books",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{tokenLibri}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "{{tokenLibri}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"title\": \"Domain-Driven Design\",\r\n    \"description\": \"Tackling complexity\",\r\n    \"author\": \"Eric Evans\",\r\n    \"synopsis\": \"This is not a boo.\",\r\n    \"pageCount\": 560,\r\n    \"publisher\": \"Addison-Wesley\",\r\n    \"type\": \"TECHNICAL\"\r\n  }"
+        },
+        "url": {
+          "raw": "http://{{host}}:{{port}}/books/list-books",
+          "protocol": "http",
+          "host": [
+            "{{host}}"
+          ],
+          "port": "{{port}}",
+          "path": [
+            "books",
+            "list-books"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "List book",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "{{tokenLibri}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "http://{{host}}:{{port}}/books/list-book/79",
+          "protocol": "http",
+          "host": [
+            "{{host}}"
+          ],
+          "port": "{{port}}",
+          "path": [
+            "books",
+            "list-book",
+            "79"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Find book by title",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{tokenLibri}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "{{tokenLibri}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "http://{{host}}:{{port}}/books/search-book/Domain-Driven Design",
+          "protocol": "http",
+          "host": [
+            "{{host}}"
+          ],
+          "port": "{{port}}",
+          "path": [
+            "books",
+            "search-book",
+            "Domain-Driven Design"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}

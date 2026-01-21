@@ -1,46 +1,49 @@
+# Catalog Service application configuration
+
 server:
   port: 8080
 
 spring:
   application:
+    # Logical service name used by Eureka and API Gateway
     name: catalog-service
 
   rabbitmq:
-    host: localhost      # MESMA configuração do Bookshelf
+    # RabbitMQ connection settings (must match other services)
+    host: localhost
     port: 5672
-    username: bookshelf  # MESMO usuário
-    password: senha123   # MESMA senha
+    username: bookshelf
+    password: senha123
 
   datasource:
+    # PostgreSQL database configuration
     url: jdbc:postgresql://localhost:5432/libri-catalog
     username: user
     password: 123
     driver-class-name: org.postgresql.Driver
 
   jpa:
-    database-platform=org:
-      hibernate:
-        dialect:
-          PostgreSQLDialect:
+    # JPA and Hibernate configuration
     hibernate:
-      ddl-auto: update  # Para desenvolvimento
-    show-sql: true
+      ddl-auto: update  # Development mode
+    show-sql: true     # Show SQL queries in logs
 
 eureka:
   client:
+    # Eureka Server location
     service-url:
       defaultZone: http://localhost:8761/eureka/
 
   instance:
-    # ⬇️ ESTA É A CONFIGURAÇÃO CRUCIAL ⬇️
-    hostname: localhost                    # Força localhost
-    prefer-ip-address: false               # ⬅️ FALSE para usar hostname
-    ip-address: 127.0.0.1                  # Define IP explícito
+    # Instance identification and networking configuration
+    hostname: localhost
+    prefer-ip-address: false
+    ip-address: 127.0.0.1
     non-secure-port-enabled: true
     secure-port-enabled: false
     instance-id: ${spring.application.name}:${server.port}
 
-    # Metadata adicional
+    # Additional metadata for Eureka dashboard
     metadata-map:
       instanceId: ${spring.application.name}:${server.port}
       hostname: localhost
